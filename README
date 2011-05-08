@@ -49,10 +49,14 @@ var template = templ8.create({
 
 produces:
 
-<h4>Templ8 Rocks</h4>
-<ul classname="my-list-of-reasons-why-it-rocks">
-  <li>it\'s javascript!</li>
-  <li>it creates html</li>
-  <li>it just made this list!</li>
-</ul>
-<p>Okay, it is not going to change the world, but it small and useful in my current project</p>
+<div id="content-wrapper" classname="page-wrapper something-cool">
+  <h4>Templ8 Rocks</h4>
+  <ul classname="my-list-of-reasons-why-it-rocks">
+    <li>it's javascript!</li>
+    <li>it creates html</li>
+    <li>it just made this list!</li>
+  </ul>
+  <p>Okay, it is not going to change the world, but it small and useful in my current project</p>
+</div>
+
+
