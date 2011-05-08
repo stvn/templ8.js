@@ -16,7 +16,11 @@
       var element = document.createElement(template.type);
 
       for (var p in template.attributes) {
-        element.setAttribute(p, template.attributes[p]);
+        var key = p;
+        if (p === 'className') {
+          key = 'class'
+        }
+        element.setAttribute(key, template.attributes[p]);
       }
 
       if (typeof template.html === 'object') {
