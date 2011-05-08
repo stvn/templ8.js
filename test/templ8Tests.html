@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>Templ8.js Tests</title>
+  
+  <script src="../src/templ8.js" type="text/javascript"></script>
+  <script src="assets/jsunittest.js" type="text/javascript"></script>
+  <script src="assets/jshoulda.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="assets/unittest.css" type="text/css" media="screen" />
+  
+  
+</head>
+
+<body>
+
+<h1>Templ8.js Tests</h1>
+
+<div id="testlog"></div>
+
+<script type="text/javascript">
+
+  context('Create HTML DOM Nodes', 
+    should('create doc frag', function () {
+      var frag = templ8.create({type: 'div'});
+      this.assertEqual(typeof frag, 'object');
+    }),
+
+    should('append to document.body', function () {
+      var frag = templ8.create({
+        type: 'div',
+        attributes: {
+          id: 'new-div'
+        }
+      });
+
+      document.body.appendChild(frag);
+      var result = document.getElementById('new-div');
+      this.assertEqual(typeof result, 'object');
+    }),
+
+    should('create nested elements', function () {
+      var frag = templ8.create({
+        type: 'div',
+        attributes: {
+         id: 'container-div-test'
+        },
+        html: {
+          type: 'h4',
+          html: {
+            type: 'a',
+            attributes: {
+              id: 'google-link',
+              href: 'http://www.google.com'
+            },
+            html: 'google'
+          }
+        }
+      });
+      document.body.appendChild(frag);
+      var element = document.getElementById('container-div-test'),
+          result = '<h4><a id="google-link" href="http://www.google.com">google</a></h4>';
+      this.assertEqual(element.innerHTML, result);
+    }),
+
+    should('create nested elements which contain multiple elements', function () {
+      var frag = templ8.create({
+        type: 'div',
+        attributes: {
+          id: 'content-wrapper',
+          className: 'page-wrapper something-cool'
+        },
+        html: [
+          {
+            type: 'h4',
+            html: 'Templ8 Rocks'
+          },
+      
+          {
+            type: 'ul',
+            attributes: {
+              className: 'my-list-of-reasons-why-it-rocks'
+            },
+            html: [
+              {
+                type: 'li',
+                html: 'it\'s javascript!'
+              },
+      
+              {
+                type: 'li',
+                html: 'it creates html'
+              },
+      
+              {
+                type: 'li',
+                html: 'it just made this list!'
+              }
+            ]
+          },
+
+          {
+            type: 'p',
+            html: 'Okay, it is not going to change the world, but it small and useful in my current project'
+          }
+        ]
+      });
+      document.body.appendChild(frag);
+      var element = document.getElementById('content-wrapper'),
+          result = '<h4>Templ8 Rocks</h4><ul classname="my-list-of-reasons-why-it-rocks"><li>it\'s javascript!</li><li>it creates html</li><li>it just made this list!</li></ul><p>Okay, it is not going to change the world, but it small and useful in my current project</p>';
+      this.assertEqual(element.innerHTML, result);
+    })
+
+  )();
+</script>
+
+</body>
+</html>
